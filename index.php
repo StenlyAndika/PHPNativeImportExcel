@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Excel Uploading PHP</title>
+    <title>Import Excel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -15,7 +15,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">Excel Upload</h1>
+        <h1 class="text-center">Import Excel</h1>
         <form method="POST" action="import.php" enctype="multipart/form-data">
             <div class="form-group row d-flex justify-content-center align-items-center">
                 <div class="col-9">
