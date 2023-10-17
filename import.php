@@ -31,6 +31,7 @@ if (isset($_POST['submit_urusan'])) {
                 if (!empty($sheetData[$i][0]) && empty($sheetData[$i][1])) {
                     $urusan = $sheetData[$i][0];
                     $nomenklatur = $sheetData[$i][5];
+                    $nomenklatur = preg_replace('/\s+/', ' ', $nomenklatur);
                     $sql = "INSERT INTO urusan VALUES('', '$urusan', '$nomenklatur')";
                     if (mysqli_query($conn, $sql)) {
                         echo "New record created successfully";
@@ -65,8 +66,13 @@ if (isset($_POST['submit_bidang_urusan'])) {
         if (!empty($sheetData)) {
             for ($i = 1; $i < count($sheetData); $i++) {
                 if (!empty($sheetData[$i][0]) && !empty($sheetData[$i][1]) && empty($sheetData[$i][2])) {
-                    $bidang_urusan = $sheetData[$i][1];
+                    if (strlen($sheetData[$i][1]) == 1) {
+                        $bidang_urusan = '0' . $sheetData[$i][1];
+                    } else {
+                        $bidang_urusan = $sheetData[$i][1];
+                    }
                     $nomenklatur = $sheetData[$i][5];
+                    $nomenklatur = preg_replace('/\s+/', ' ', $nomenklatur);
                     $sql = "INSERT INTO bidang_urusan VALUES('', '$bidang_urusan', '$nomenklatur')";
                     if (mysqli_query($conn, $sql)) {
                         echo "New record created successfully";
@@ -101,8 +107,13 @@ if (isset($_POST['submit_program'])) {
         if (!empty($sheetData)) {
             for ($i = 1; $i < count($sheetData); $i++) {
                 if (!empty($sheetData[$i][0]) && !empty($sheetData[$i][1]) && !empty($sheetData[$i][2]) && empty($sheetData[$i][3])) {
-                    $program = $sheetData[$i][2];
+                    if (strlen($sheetData[$i][2]) == 1) {
+                        $program = '0' . $sheetData[$i][2];
+                    } else {
+                        $program = $sheetData[$i][2];
+                    }
                     $nomenklatur = $sheetData[$i][5];
+                    $nomenklatur = preg_replace('/\s+/', ' ', $nomenklatur);
                     $sql = "INSERT INTO program VALUES('', '$program', '$nomenklatur')";
                     if (mysqli_query($conn, $sql)) {
                         echo "New record created successfully";
@@ -138,7 +149,12 @@ if (isset($_POST['submit_kegiatan'])) {
             for ($i = 1; $i < count($sheetData); $i++) {
                 if (!empty($sheetData[$i][0]) && !empty($sheetData[$i][1]) && !empty($sheetData[$i][2]) && !empty($sheetData[$i][3]) && empty($sheetData[$i][4])) {
                     $kegiatan = $sheetData[$i][3];
+                    if (is_numeric($kegiatan)) {
+                        $kegiatan = (string)$kegiatan;
+                        $kegiatan = substr($kegiatan, 0, 1) . '.' . substr($kegiatan, 1);
+                    }
                     $nomenklatur = $sheetData[$i][5];
+                    $nomenklatur = preg_replace('/\s+/', ' ', $nomenklatur);
                     $sql = "INSERT INTO kegiatan VALUES('', '$kegiatan', '$nomenklatur')";
                     if (mysqli_query($conn, $sql)) {
                         echo "New record created successfully";
@@ -174,11 +190,35 @@ if (isset($_POST['submit'])) {
             for ($i = 1; $i < count($sheetData); $i++) {
                 if (!empty($sheetData[$i][0])) {
                     $urusan = $sheetData[$i][0];
-                    $bidang_urusan = $sheetData[$i][1];
-                    $program = $sheetData[$i][2];
+                    if (strlen($sheetData[$i][1]) == 1) {
+                        $bidang_urusan = '0' . $sheetData[$i][1];
+                    } else {
+                        $bidang_urusan = $sheetData[$i][1];
+                    }
+
+                    if (strlen($sheetData[$i][2]) == 1) {
+                        $program = '0' . $sheetData[$i][2];
+                    } else {
+                        $program = $sheetData[$i][2];
+                    }
+
                     $kegiatan = $sheetData[$i][3];
-                    $sub_kegiatan = $sheetData[$i][4];
+                    if (is_numeric($kegiatan)) {
+                        $kegiatan = (string)$kegiatan;
+                        $kegiatan = substr($kegiatan, 0, 1) . '.' . substr($kegiatan, 1);
+                    }
+
+                    if (strlen($sheetData[$i][4]) == 1) {
+                        $sub_kegiatan = '000' . $sheetData[$i][4];
+                    } else if (strlen($sheetData[$i][4]) == 2) {
+                        $sub_kegiatan = '00' . $sheetData[$i][4];
+                    } else if (strlen($sheetData[$i][4]) == 3) {
+                        $sub_kegiatan = '0' . $sheetData[$i][4];
+                    } else {
+                        $sub_kegiatan = $sheetData[$i][4];
+                    }
                     $nomenklatur = $sheetData[$i][5];
+                    $nomenklatur = preg_replace('/\s+/', ' ', $nomenklatur);
                     $kinerja = $sheetData[$i][6];
                     $indikator = $sheetData[$i][7];
                     $satuan = $sheetData[$i][8];
