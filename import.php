@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
                     $kinerja = $sheetData[$i][6];
                     $indikator = $sheetData[$i][7];
                     $satuan = $sheetData[$i][8];
-                    $sql = "INSERT INTO kepmen VALUES('', '$urusan', '$bidang_urusan', '$program', '$kegiatan', '$sub_kegiatan', '$nomenklatur', '$kinerja', '$indikator', '$satuan')";
+                    $sql = "INSERT INTO kepmendagri VALUES('', '$urusan', '$bidang_urusan', '$program', '$kegiatan', '$sub_kegiatan', '$nomenklatur', '$kinerja', '$indikator', '$satuan')";
                     if (mysqli_query($conn, $sql)) {
                         echo "New record created successfully";
                     } else {
